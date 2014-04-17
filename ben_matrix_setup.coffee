@@ -30,7 +30,10 @@ if (Meteor.isClient)
             score = @default_value
           
           score = parseInt(score)
-          total_score += parseInt(priority.value) * score
+          pvalue = priority.value
+          if(!pvalue)
+            pvalue = @default_value
+          total_score += parseInt(pvalue) * score
         if(parseInt(answer['score']) != total_score)
           answer['score']= total_score
           Answers.update(answer._id, answer)
