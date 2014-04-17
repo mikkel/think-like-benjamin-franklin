@@ -1,47 +1,68 @@
-<head>
-  <title>ben_matrix</title>
-</head>
-
-<body>
-  <header class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Think Like Ol' Benjamin Franklin</h1>
-        <p>
-          Benjamin Franklin used a decision matrix to plot out his decisions.  This is a visual way for you to do the same thing.  No math needed.
-
-        </p>
+<template name="header">
+  <header class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Bennie Qs</a>
+        <p class="navbar-text">Think Like Ol' Benjamin Franklin</p>
+        <ul class="nav navbar-nav navbar-right">
+          <li> <a href="{{pathFor 'home'}}"> My Questions </a> </li>
+          <li> <a href="{{pathFor 'help'}}"> Help! </a> </li>
+        </ul>
       </div>
     </div>
   </header>
-
-  <div class="container input-matrix">
-    <div class="row">
-      <div class="col-md-12">
-        "By failing to prepare you are preparing to fail"
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        {{> user_data}}
-      </div>
-    </div>
-
-  </div>
-</body>
-
-<template name="user_data">
-  <hr/>
-  <hr/>
-  {{#each questions}}
-    {{> question }}
-  {{/each}}
-  <input type="button" class="question" data-crud="create" value='+'/>
-  <hr/>
-  <hr/>
 </template>
 
-<template name="question">
+<template name="home">
+  <head>
+    <title>ben_matrix</title>
+  </head>
+
+  <body>
+
+    {{> header}}
+
+    <div class="container input-matrix">
+      <div class="row">
+        <div class="col-md-12">
+          {{> user_data}}
+        </div>
+      </div>
+
+    </div>
+  </body>
+</template>
+
+<template name="user_data">
+  <table class="table table-striped">
+    <thead>
+      <th> Question </th>
+      <th> Answer </th>
+    </thead>
+    <tbody>
+      {{#each questions}}
+        <tr>
+          <td><a href="{{ pathFor "questionsShow" }}"> {{name}} </a></td>
+          <td>{{ answer_name }}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <input type="button" class="question btn btn-info" data-crud="create" value='New Question' />
+</template>
+
+<template name="questionsShow">
+  {{> header}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        {{> questionsMatrix }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="questionsMatrix">
   <div id="{{_id}}">
     <h2>
       <input data-crud="update" class="question" value="{{name}}"/>
@@ -101,9 +122,9 @@
 
 <template name="answers">
 <tr>
-  <th>
+  <td>
     Answers <input type="button" data-crud="create" value="+"/>
-  </th>
+  </td>
 </tr>
 {{#each answers}}
   <tr data-answer="{{_id}}">

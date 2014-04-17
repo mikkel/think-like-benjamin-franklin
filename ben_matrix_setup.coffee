@@ -5,6 +5,13 @@ Questions = new Meteor.Collection("questions",
     new Question(doc)
 )
 
+Router.map ->
+  this.route 'home', path: '/'
+  this.route 'questionsShow', 
+    path: '/questions/:_id',
+    data: ->
+      Questions.findOne(this.params._id)
+
 if (Meteor.isClient) 
   window.Priorities = Priorities
   window.Answers = Answers
@@ -21,6 +28,13 @@ if (Meteor.isClient)
     default_value: ->
       50
 
+    answer_name: ->
+      result = Answers.findOne({question_id: @id}, {sort: {score: -1}})
+      
+      if result && result.score
+        result.name
+      else
+        "Undecided"
     calculate_scores: ->
       @answers().forEach (answer) =>
         total_score = 0
