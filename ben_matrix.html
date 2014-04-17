@@ -3,18 +3,31 @@
 </head>
 
 <body>
-  <h1>Think Like Ol' Benjamin Franklin</h1>
-  <p>
-    Benjamin Franklin used a decision matrix to plot out his decisions.  This is a visual way for you to do the same thing.  No math needed.
+  <header class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Think Like Ol' Benjamin Franklin</h1>
+        <p>
+          Benjamin Franklin used a decision matrix to plot out his decisions.  This is a visual way for you to do the same thing.  No math needed.
 
-  </p>
-  <p>
-    "By failing to prepare you are preparing to fail"
-  </p>
+        </p>
+      </div>
+    </div>
+  </header>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        "By failing to prepare you are preparing to fail"
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{> user_data}}
+      </div>
+    </div>
 
-  <hr/>
-  {{> user_data}}
+  </div>
 </body>
 
 <template name="user_data">
