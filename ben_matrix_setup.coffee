@@ -60,7 +60,6 @@ if (Meteor.isClient)
   editOrUpdate = (e, klass, opts) ->
     el = $(e.currentTarget)
     opts["name"] = el.val()
-    console.log(opts)
     klass.update(opts._id, opts)
 
   Template.user_data.questions = 
@@ -88,8 +87,6 @@ if (Meteor.isClient)
       Answers.insert({question_id: this._id, name: "New Answer"})
     'click input[type="button"][data-crud="delete"]': (e) ->
       Answers.remove({_id: this._id})
-    'click td .answer': (e) ->
-      console.log($("##{this._id}"))
     'change .answer[data-crud="update"]': (e) ->
       editOrUpdate(e, Answers, { _id: this._id, question_id: this.question_id})
     'change .answer[type="range"]' : (e) ->
@@ -99,10 +96,10 @@ if (Meteor.isClient)
       val = $(e.currentTarget).val()
       obj["answer_priorities"] ||= {}
       obj["answer_priorities"][priority_id] = val
+      Answers.update(answer_id, obj)
       
       Questions.find().forEach (question) ->
         question.calculate_scores()
-      Answers.update(answer_id, obj)
 
   Template.user_data.events = 
     'click input.question[type="button"][data-crud="create"]': (e) ->
