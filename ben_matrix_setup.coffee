@@ -101,9 +101,10 @@ if (Meteor.isClient)
       Questions.find().forEach (question) ->
         question.calculate_scores()
 
-  Template.questionsShow.events = 
+  Template.user_data.events = 
     'click input.question[type="button"][data-crud="create"]': (e) ->
       Questions.insert({name: "New Question"})
+  Template.questionsShow.events = 
     'change .question[data-crud="update"]': (e) ->
       editOrUpdate(e, Questions, { _id: this._id})
 
