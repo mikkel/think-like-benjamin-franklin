@@ -15,7 +15,7 @@
     </div>
   </header>
 
-  <div class="container">
+  <div class="container input-matrix">
     <div class="row">
       <div class="col-md-12">
         "By failing to prepare you are preparing to fail"
@@ -46,7 +46,7 @@
     <h2>
       <input data-crud="update" class="question" value="{{name}}"/>
     </h2>
-    <table>
+    <table class="table table-striped">
       <thead>
         {{> priorities}}
       </thead>
@@ -54,23 +54,31 @@
         {{> answers }}
       </tbody>
     </table>
-    <h3> Your Answer according to Ben: </h3>
-    <p>
-      {{current_answer.name}}
-    </p>
-    <table>
-      <tbody>
-        {{> prioritized_answers }}
-      </tbody>
+    <hr/>
+    <div class="col-md-12">
+      <h4> Your Answer according to Ben: </h4>
+    </div>
+    <table class="table table-hover">
+      {{> prioritized_answers }}
     </table>
   </div>
   <hr/>
 </template>
 
 <template name="prioritized_answers">
-  {{#each prioritized_answers}}
-    {{name}} / {{score}}
-  {{/each}}
+  <thead>
+    <th>Score</th>
+    <th>Answer</th>
+
+  </thead>
+  <tbody>
+    {{#each prioritized_answers}}
+      <tr>
+        <td> {{score}}</td>
+        <td> {{name}} </td>
+      </tr>
+    {{/each}}
+  </tbody>
 
 </template>
 

@@ -18,20 +18,25 @@ if (Meteor.isClient)
     answers: ->
       Answers.find({question_id: @id})
 
+    default_value: ->
+      50
+
     calculate_scores: ->
       @answers().forEach (answer) =>
+        total_score = 0
         @priorities().forEach (priority) =>
-          #answer.score= Math.rand()
+          score = answer.answer_priorities[priority._id] 
+          if(!score)
+            score = @default_value
+          
+          score = parseInt(score)
+          total_score += parseInt(priority.value) * score
+        if(parseInt(answer['score']) != total_score)
+          answer['score']= total_score
           Answers.update(answer._id, answer)
     prioritized_answers: ->
-      @calculate_scores()
       Answers.find({question_id: @id}, {sort: {score: -1}})
 
-  class SampleQuestion extends Question
-    current_answer: ->
-      for answer in @answers
-        range = $("##{answer.name}-points")[0]
-      Answers.find({question_id: @id}, {sort: {score: -1}, limit: 1})
 
   editOrUpdate = (e, klass, opts) ->
     el = $(e.currentTarget)
@@ -53,10 +58,11 @@ if (Meteor.isClient)
     'change .priority[data-crud="update"]': (e) ->
       editOrUpdate(e, Priorities, { _id: this._id, question_id: this.question_id})
     'change .priority[type="range"]': (e) ->
-      console.log("P change")
       obj = Priorities.findOne(this._id)
       val = $(e.currentTarget).val()
       obj["value"] = val
+      Questions.find().forEach (question) ->
+        question.calculate_scores()
       Priorities.update(this._id, obj)
   Template.answers.events =
     'click input[type="button"][data-crud="create"]': (e) ->
@@ -68,13 +74,15 @@ if (Meteor.isClient)
     'change .answer[data-crud="update"]': (e) ->
       editOrUpdate(e, Answers, { _id: this._id, question_id: this.question_id})
     'change .answer[type="range"]' : (e) ->
-      console.log(e)
       answer_id = $(e.currentTarget).attr('data-answer')
       priority_id = $(e.currentTarget).attr('data-priority')
       obj = Answers.findOne(answer_id)
       val = $(e.currentTarget).val()
       obj["answer_priorities"] ||= {}
       obj["answer_priorities"][priority_id] = val
+      
+      Questions.find().forEach (question) ->
+        question.calculate_scores()
       Answers.update(answer_id, obj)
 
   Template.user_data.events = 
