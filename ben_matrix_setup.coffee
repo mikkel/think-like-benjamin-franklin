@@ -25,6 +25,8 @@ if (Meteor.isClient)
       @answers().forEach (answer) =>
         total_score = 0
         @priorities().forEach (priority) =>
+          answer.answer_priorities ||= {}
+          
           score = answer.answer_priorities[priority._id] 
           if(!score)
             score = @default_value
