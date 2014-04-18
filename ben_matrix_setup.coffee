@@ -62,8 +62,12 @@ if (Meteor.isClient)
     opts["name"] = el.val()
     klass.update(opts._id, opts)
 
-  Template.user_data.questions = 
-    Questions.find()
+  Template.user_data.questions = ->
+    console.log Meteor.user()
+    if(Meteor.user())
+      Questions.find({user_id: Meteor.user()._id})
+    else
+      Questions.find({user_id: null})
   Template.priorities.events = 
     'click input[type="range"]': (e) ->
       t = $(e.currentTarget)
@@ -84,7 +88,10 @@ if (Meteor.isClient)
       Priorities.update(this._id, obj)
   Template.answers.events =
     'click input[type="button"][data-crud="create"]': (e) ->
-      Answers.insert({question_id: this._id, name: "New Answer"})
+      user_id = null
+      if(Meteor.user())
+        user_id = Meteor.user()._id
+      Answers.insert({question_id: this._id, name: "New Answer", user_id: user_id})
     'click input[type="button"][data-crud="delete"]': (e) ->
       Answers.remove({_id: this._id})
     'change .answer[data-crud="update"]': (e) ->

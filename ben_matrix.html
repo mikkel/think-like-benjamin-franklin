@@ -2,11 +2,16 @@
   <header class="navbar navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Bennie Qs</a>
+        <a class="navbar-brand" href="/">Bennie Qs</a>
         <p class="navbar-text">Think Like Ol' Benjamin Franklin</p>
-        <ul class="nav navbar-nav navbar-right">
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
           <li> <a href="{{pathFor 'home'}}"> My Questions </a> </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
           <li> <a href="{{pathFor 'help'}}"> Help! </a> </li>
+          {{> loginButtons}}
         </ul>
       </div>
     </div>
