@@ -43,12 +43,14 @@
     <thead>
       <th> Question </th>
       <th> Answer </th>
+      <th>  </th>
     </thead>
     <tbody>
       {{#each questions}}
         <tr>
           <td><a href="{{ pathFor "questionsShow" }}"> {{name}} </a></td>
           <td>{{ answer_name }}</td>
+          <td> <a data-crud="delete" class="question" href="#">X</a> </td>
         </tr>
       {{/each}}
     </tbody>
@@ -95,7 +97,6 @@
   <thead>
     <th>Score</th>
     <th>Answer</th>
-
   </thead>
   <tbody>
     {{#each prioritized_answers}}

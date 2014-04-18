@@ -105,11 +105,14 @@ if (Meteor.isClient)
         question.calculate_scores()
 
   Template.user_data.events = 
-    'click input.question[type="button"][data-crud="create"]': (e) ->
+    'click .question[data-crud="create"]': (e) ->
       user_id = null
       user_id = Meteor.user()._id if Meteor.user()
       q = Questions.insert({name: "New Question", user_id: user_id})
       Router.go('questionsShow', {_id: q})
+    'click .question[data-crud="delete"]': (e) ->
+      if(confirm("Really delete the question: '#{this.name}' ?  This operation is permanent."))
+        Questions.remove(this._id)
   Template.questionsShow.events = 
     'change .question[data-crud="update"]': (e) ->
       user_id = null
