@@ -112,7 +112,9 @@ if (Meteor.isClient)
       Router.go('questionsShow', {_id: q})
   Template.questionsShow.events = 
     'change .question[data-crud="update"]': (e) ->
-      editOrUpdate(e, Questions, { _id: this._id})
+      user_id = null
+      user_id = Meteor.user()._id if Meteor.user()
+      editOrUpdate(e, Questions, { _id: this._id, user_id: user_id })
 
   Template.answers.display_answer_priorities = ->
     priorities = Priorities.find({question_id: this.question_id})
