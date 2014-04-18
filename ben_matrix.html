@@ -83,12 +83,14 @@
       </tbody>
     </table>
     <hr/>
-    <div class="col-md-12">
+    <div class="alert alert-info">
       <h4> Your Answer according to Ben: </h4>
     </div>
-    <table class="table table-hover">
-      {{> prioritized_answers }}
-    </table>
+    <blockquote>
+      <table class="table table-hover">
+        {{> prioritized_answers }}
+      </table>
+    </blockquote>
   </div>
   <hr/>
 </template>
@@ -111,34 +113,32 @@
 
 <template name="priorities">
   <th>
-    <span class="priority">Priorities</span>
-    <input type="button" data-crud="create" value="+"/>
+    Priorities
+    <a class="priority" data-crud="create">+</a>
   </th>
   {{#each priorities}}
     <th>
-      <input type="range" class="priority" min="1" max="100" value="{{value}}" />
-      <br>
       <input data-crud="update" class="priority" value="{{name}}" />
+      <a data-crud="delete" class="priority"> X </a>
       <br>
-      <input type="button" data-crud="delete" value="-"/>
-      <span>{{value}}</span>
+      <input type="range" class="priority" min="1" max="100" value="{{value}}" />
     </th>
   {{/each}}
 </template>
 
 <template name="answers">
-<tr>
-  <td>
-    Answers <input type="button" data-crud="create" value="+"/>
-  </td>
-</tr>
 {{#each answers}}
   <tr data-answer="{{_id}}">
     <td>
       <input type="text" data-crud="update" class="answer" value="{{name}}" />
-      <input type="button" data-crud-id="{{_id}}" data-crud="delete" value="-"/>
+      <a data-crud-id="{{_id}}" class="answer" data-crud="delete">-</a>
     </td>
     {{{display_answer_priorities}}}
   </tr>
 {{/each}}
+<tr>
+  <td>
+    <a class="answer" data-crud="create" href='#'>New Answer</a>
+  </td>
+</tr>
 </template>

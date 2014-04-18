@@ -72,9 +72,9 @@ if (Meteor.isClient)
       t = $(e.currentTarget)
       id = t.attr("id")
       val = t.val()
-    'click input[type="button"][data-crud="create"]': (e) ->
+    'click .priority[data-crud="create"]': (e) ->
       Priorities.insert({question_id: this._id, name: "New Priority"})
-    'click input[type="button"][data-crud="delete"]': (e) ->
+    'click .priority[data-crud="delete"]': (e) ->
       Priorities.remove({_id: this._id})
     'change .priority[data-crud="update"]': (e) ->
       editOrUpdate(e, Priorities, { _id: this._id, question_id: this.question_id})
@@ -86,9 +86,9 @@ if (Meteor.isClient)
         question.calculate_scores()
       Priorities.update(this._id, obj)
   Template.answers.events =
-    'click input[type="button"][data-crud="create"]': (e) ->
+    'click .answer[data-crud="create"]': (e) ->
       Answers.insert({question_id: this._id, name: "New Answer" })
-    'click input[type="button"][data-crud="delete"]': (e) ->
+    'click .answer[data-crud="delete"]': (e) ->
       Answers.remove({_id: this._id})
     'change .answer[data-crud="update"]': (e) ->
       editOrUpdate(e, Answers, { _id: this._id, question_id: this.question_id})
@@ -100,7 +100,7 @@ if (Meteor.isClient)
       obj["answer_priorities"] ||= {}
       obj["answer_priorities"][priority_id] = val
       Answers.update(answer_id, obj)
-      
+
       Questions.find().forEach (question) ->
         question.calculate_scores()
 
